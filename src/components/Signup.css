@@ -1,0 +1,8 @@
+.validation__message {
+  font-size: 12px;
+  text-align: left;
+  color: #ff0000;
+  font-weight: 500;
+  letter-spacing: 1px;
+  padding-top: 3px;
+}

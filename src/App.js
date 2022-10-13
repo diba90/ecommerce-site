@@ -1,16 +1,18 @@
+import React from "react";
+import MainComponent from "./components/MainComponent";
 import "./App.css";
-import Button from "@mui/material/Button";
+import store from "./app/store";
+import { Provider } from "react-redux";
+import { Route, Routes } from "react-router-dom";
 
 function App() {
   return (
-    <>
-      <h1
-        className="text-green-900 text-7xl mt-40"
-        style={{ textAlign: "center" }}
-      >
-        Ecommerce Site <Button variant="outlined">Enter</Button>
-      </h1>
-    </>
+    <Provider store={store}>
+      <Routes>
+        <Route index element={<MainComponent />} />
+        <Route path="/store" element={<MainComponent />} />
+      </Routes>
+    </Provider>
   );
 }
 

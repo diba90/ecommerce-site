@@ -1,0 +1,7 @@
+.header__greeting__message {
+  display: flex;
+  float: left;
+  width: 100%;
+  justify-content: right;
+  align-items: center;
+}
