@@ -11,10 +11,26 @@ const MainComponent = () => {
       <Header />
       <Grid container item xs={12}>
         <Grid item xs={2}>
-          <Grid container item xs={12} py={4} spacing={2}>
+          <h3
+            style={{
+              fontSize: "17px",
+              fontWeight: "700",
+              padding: "50px 35px 0 35px",
+            }}
+          >
+            {"Filter Products"}
+          </h3>
+          <Grid
+            container
+            item
+            xs={12}
+            py={4}
+            style={{ padding: "45px 35px" }}
+            spacing={2}
+          >
             <Grid item xs={12}>
               <Chip
-                label="Ratings"
+                label="Ratings: 5 > 1"
                 component=""
                 href="#basic-chip"
                 variant="outlined"
@@ -23,7 +39,7 @@ const MainComponent = () => {
             </Grid>
             <Grid item xs={12}>
               <Chip
-                label="High -> Low"
+                label="Price: High > Low"
                 component=""
                 href="#basic-chip"
                 variant="outlined"
@@ -32,7 +48,7 @@ const MainComponent = () => {
             </Grid>
             <Grid item xs={12}>
               <Chip
-                label="Low -> High"
+                label="Price: Low > High"
                 component=""
                 href="#basic-chip"
                 variant="outlined"
@@ -41,7 +57,7 @@ const MainComponent = () => {
             </Grid>
             <Grid item xs={12}>
               <Chip
-                label="Include Out of Stock"
+                label="Sort by Category"
                 component=""
                 href="#basic-chip"
                 variant="outlined"

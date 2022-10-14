@@ -6,14 +6,16 @@
   padding: 20px;
   background: #fbfbfb;
   margin: 30px 10px;
+  height: 500px;
 }
 
 .product__image {
   height: 230px;
 }
 
-.product__content > img {
-  width: 100%;
+.product__image > img {
+  width: auto;
+  height: 200px;
   margin-bottom: 13px;
 }
 
@@ -23,7 +25,8 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 10px 0;
+  padding: 10px 0 20px 0;
+  height: 85px;
 }
 
 .product__description > h3 {

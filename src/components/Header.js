@@ -1,46 +1,31 @@
-import React, { useState } from "react";
+import React from "react";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
 import Toolbar from "@mui/material/Toolbar";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
-import Badge from "@mui/material/Badge";
 import Grid from "@mui/material/Grid";
-import { styled } from "@mui/material/styles";
-import Profile from "./Profile";
-import { useDispatch, useSelector } from "react-redux";
 import Login from "./Login";
+import { Link as RouterLink } from "react-router-dom";
 
 const Header = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
-
-  var loginData = useSelector((state) => {
-    return state.user;
-  });
-
-  const StyledBadge = styled(Badge)(({ theme }) => ({
-    "& .MuiBadge-badge": {
-      right: -10,
-      top: 2,
-      border: "none",
-      fontSize: "11px",
-      backgroundColor: "#367E18",
-      padding: "5px 10px",
-    },
-  }));
-
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static" style={{ backgroundColor: "rgb(47 123 181)" }}>
+      <AppBar position="static" style={{ backgroundColor: "rgb(26 98 153)" }}>
         <Toolbar>
           <Grid container item xs={12}>
             <Grid item xs={2}>
-              <h1 className="text-xl font-extrabold m-0">Ecommerce App</h1>
+              <h1 className="text-xl font-extrabold m-0">EcomApp</h1>
             </Grid>
 
             <Grid item xs={7}>
               <Stack direction="row">
-                <Button color="inherit">Products</Button>
+                <Button component={RouterLink} to="/store" color="inherit">
+                  Products
+                </Button>
+                <Button component={RouterLink} to="/account" color="inherit">
+                  Account
+                </Button>
               </Stack>
             </Grid>
 

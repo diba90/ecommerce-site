@@ -8,21 +8,35 @@ import IconButton from "@mui/material/IconButton";
 import { login, logout } from "../features/userSlice";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import Signup from "./Signup";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
+import Products from "./Products";
+import Badge from "@mui/material/Badge";
+import { styled } from "@mui/material/styles";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import "./Login.css";
+
+const StyledBadge = styled(Badge)(({ theme }) => ({
+  "& .MuiBadge-badge": {
+    right: -11,
+    top: 0,
+    border: `none`,
+    padding: "0 6px",
+    background: "#47b246",
+    fontWeight: "400",
+    fontSize: "12px",
+  },
+}));
 
 const Login = () => {
   const [open, setOpen] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
-  const [success, setSuccess] = useState(null);
   const [visible, setVisible] = useState(false);
   const [flag, setFlag] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState("success");
@@ -37,48 +51,51 @@ const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   var errors = {};
-  var i = 1;
 
   const handleLogout = () => {
     dispatch(logout());
-    navigate("/");
+    window.location.reload();
   };
 
   useEffect(() => {
-    {
-      if (flag === true) {
-        if (userList && userList.length) {
-          const getUsers = JSON.parse(localStorage.getItem("ListUsers"));
-          getUsers.map((el) => {
-            if (el.email === email && el.password === password) {
-              let firstname = el.first_name;
-              let lastname = el.last_name;
-              setEmail("");
-              setPassword("");
+    if (flag === true) {
+      if (userList && userList.length) {
+        const getUsers = JSON.parse(localStorage.getItem("ListUsers"));
 
-              dispatch(
-                login({
-                  email: email,
-                  password: password,
-                  loggedIn: true,
-                  firstname: firstname,
-                  lastname: lastname,
-                })
-              );
-              setVisible(true);
-              setAlertSeverity("success");
-              setAlertText("Logged in successfully");
-              setTimeout(() => {
-                setOpen(false);
-                navigate("/store");
-              }, 2000);
-            } else {
-              setVisible(true);
-              setAlertSeverity("error");
-              setAlertText("Incorrect email and password");
-            }
-          });
-        }
+        getUsers.find((el) => {
+          if (el.email === email && el.password === password) {
+            let firstname = el.first_name;
+            let lastname = el.last_name;
+            setEmail("");
+            setPassword("");
+
+            dispatch(
+              login({
+                email: email,
+                password: password,
+                loggedIn: true,
+                firstname: firstname,
+                lastname: lastname,
+              })
+            );
+            setVisible(true);
+            setAlertSeverity("success");
+            setAlertText("Logged in successfully");
+            setTimeout(() => {
+              setOpen(false);
+              setVisible(false);
+              window.location.reload();
+            }, 3000);
+            return true;
+          } else {
+            setVisible(true);
+            setAlertSeverity("error");
+            setAlertText("Incorrect email and password");
+            setTimeout(() => {
+              setVisible(false);
+            }, 4000);
+          }
+        });
       }
     }
   }, [error]);
@@ -113,28 +130,43 @@ const Login = () => {
   return (
     <div>
       <Grid container item xs={12}>
-        <Grid item xs={12}>
+        <Grid item xs={12} style={{ display: "flex" }}>
           {loginData.user && loginData.user.loggedIn ? (
-            <div className="header__greeting__message">
-              <h3 className="text-l ml-3 tracking-wide text-white-900">
-                Hello,
-                <b>{loginData.user.firstname}</b>
-              </h3>
-              <IconButton
-                className="icon__button"
-                color="primary"
-                style={{ margin: "0 15px" }}
-                aria-label="Home"
-                component="label"
-                onClick={handleLogout}
-              >
-                <LogoutIcon style={{ fontSize: "20px", color: "#ffffff" }} />
+            <>
+              <IconButton aria-label="cart">
+                <StyledBadge badgeContent={4} color="secondary">
+                  <ShoppingCartIcon style={{ color: "#ffffff" }} />
+                </StyledBadge>
               </IconButton>
-            </div>
+              <div className="header__greeting__message">
+                <h3 className="text-l ml-3 tracking-wide text-white-900">
+                  Hello,{"  "}
+                  <b>{loginData.user.firstname}</b>
+                </h3>
+                <IconButton
+                  className="icon__button"
+                  color="primary"
+                  style={{ margin: "0 15px" }}
+                  aria-label="Home"
+                  component="label"
+                  onClick={handleLogout}
+                >
+                  <LogoutIcon style={{ fontSize: "20px", color: "#ffffff" }} />
+                </IconButton>
+              </div>
+            </>
           ) : (
-            (<Button color="inherit" onClick={handleClickOpen}>
-              Sign In
-            </Button>)(<Signup />)
+            <>
+              <Button
+                color="inherit"
+                onClick={() => {
+                  setOpen(true);
+                }}
+              >
+                Sign In
+              </Button>
+              <Signup />
+            </>
           )}
         </Grid>
       </Grid>
@@ -152,7 +184,6 @@ const Login = () => {
         <DialogTitle>Sign In</DialogTitle>
         <DialogContent style={{ width: "500px" }}>
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             value={email}
@@ -164,7 +195,6 @@ const Login = () => {
           />
           <p className="validation__message">{error.email}</p>
           <TextField
-            autoFocus
             margin="dense"
             id="name"
             value={password}

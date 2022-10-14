@@ -1,20 +1,12 @@
 import React, { useState, useEffect } from "react";
-import Box from "@mui/material/Box";
-import Container from "@mui/material/Container";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
-import IconButton from "@mui/material/IconButton";
 import Collapse from "@mui/material/Collapse";
-import CloseIcon from "@mui/icons-material/Close";
 import Alert from "@mui/material/Alert";
-import { Link as RouterLink } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
-import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
 import "./Signup.css";
 
@@ -29,58 +21,35 @@ const Signup = () => {
   const [error, setError] = useState({});
   const [flag, setFlag] = useState(false);
 
-  var loginData = useSelector((state) => {
-    return state.user;
-  });
-
   useEffect(() => {
-    {
-      if (flag === true) {
-        if (localStorage.getItem("ListUsers") != null) {
-          const addedUser = JSON.parse(localStorage.getItem("ListUsers"));
-          const updatedUsers = [...addedUser, obj];
-          localStorage.setItem("ListUsers", JSON.stringify(updatedUsers));
-          setVisible(true);
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setPassword("");
-          setAddress("");
-        } else {
-          localStorage.setItem("ListUsers", JSON.stringify(users));
-          const addedUser = JSON.parse(localStorage.getItem("ListUsers"));
-          const updatedUsers = [...addedUser, obj];
-          localStorage.setItem("ListUsers", JSON.stringify(updatedUsers));
-          setVisible(true);
-          setFirstName("");
-          setLastName("");
-          setEmail("");
-          setPassword("");
-          setAddress("");
-        }
+    if (flag === true) {
+      if (localStorage.getItem("ListUsers") != null) {
+        const addedUser = JSON.parse(localStorage.getItem("ListUsers"));
+        const updatedUsers = [...addedUser, obj];
+        localStorage.setItem("ListUsers", JSON.stringify(updatedUsers));
+        setVisible(true);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setAddress("");
+      } else {
+        localStorage.setItem("ListUsers", JSON.stringify(users));
+        const addedUser = JSON.parse(localStorage.getItem("ListUsers"));
+        const updatedUsers = [...addedUser, obj];
+        localStorage.setItem("ListUsers", JSON.stringify(updatedUsers));
+        setVisible(true);
+        setTimeout(() => {
+          setVisible(false);
+        }, 2000);
+        setFirstName("");
+        setLastName("");
+        setEmail("");
+        setPassword("");
+        setAddress("");
       }
     }
   }, [error]);
-
-  const initialValues = {
-    firstname: "",
-    lastname: "",
-    email: "",
-    password: "",
-    address: "",
-  };
-  const [formValues, setFormValues] = useState(initialValues);
-
-  const box_styles = {
-    backgroundColor: "#ffffff",
-    height: "60%",
-    width: "50%",
-    textAlign: "center",
-    padding: "30px",
-    margin: "10% 27% 0 27%",
-    border: "solid 1px #f2f2f2",
-    borderRadius: "14px",
-  };
 
   var users = [
     {
@@ -91,10 +60,10 @@ const Signup = () => {
       address: "Nagavarapalya, CV Raman Nagar, Bangalore, Karnataka, 560093",
     },
     {
-      first_name: "Radhika",
+      first_name: "Raj",
       last_name: "Dutta",
-      email: "radhika@gmail.com",
-      password: "radhika123",
+      email: "raj@gmail.com",
+      password: "raj123",
       address: "Kormanagala, Bangalore, Karnataka, 560073",
     },
   ];
@@ -180,7 +149,6 @@ const Signup = () => {
           <Grid container item xs={12} spacing={4}>
             <Grid item xs={6}>
               <TextField
-                autoFocus
                 margin="dense"
                 id="first_name"
                 label="First Name"
@@ -194,7 +162,6 @@ const Signup = () => {
             </Grid>
             <Grid item xs={6}>
               <TextField
-                autoFocus
                 margin="dense"
                 id="last_name"
                 value={lastName}
@@ -210,7 +177,6 @@ const Signup = () => {
           <Grid container item xs={12}>
             <Grid item xs={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 label="Email ID"
@@ -224,7 +190,6 @@ const Signup = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
-                autoFocus
                 margin="dense"
                 id="name"
                 value={password}
