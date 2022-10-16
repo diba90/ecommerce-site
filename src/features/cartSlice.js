@@ -9,10 +9,38 @@ export const cartSlice = createSlice({
     addToCart: (state, action) => {
       state.cart.push(action.payload);
     },
+    removeFromCart: (state, action) => {
+      const nodeIndex = state.cart.findIndex(
+        (element) => element.id === action.payload.id
+      );
+      state.cart.splice(nodeIndex, 1);
+    },
+    clearCart: (state) => {
+      state.cart = null;
+    },
+    addQty: (state, action) => {
+      state.cart.map((cartItem) => {
+        if (cartItem.id === action.payload.id) {
+          if (cartItem.quantity <= 9) {
+            cartItem.quantity += 1;
+          }
+        }
+      });
+    },
+    removeQty: (state, action) => {
+      state.cart.map((cartItem) => {
+        if (cartItem.id === action.payload.id) {
+          if (cartItem.quantity > 1) {
+            cartItem.quantity -= 1;
+          }
+        }
+      });
+    },
   },
 });
 
-export const { addToCart } = cartSlice.actions;
+export const { addToCart, removeFromCart, clearCart, addQty, removeQty } =
+  cartSlice.actions;
 
 export const selectCart = (state) => state.user.user;
 

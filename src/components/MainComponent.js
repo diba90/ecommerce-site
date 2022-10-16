@@ -10,7 +10,7 @@ const MainComponent = () => {
     <React.Fragment>
       <Header />
       <Grid container item xs={12}>
-        <Grid item xs={2}>
+        {/* <Grid item xs={2}>
           <h3
             style={{
               fontSize: "17px",
@@ -65,8 +65,8 @@ const MainComponent = () => {
               />
             </Grid>
           </Grid>
-        </Grid>
-        <Grid item xs={10}>
+        </Grid> */}
+        <Grid item xs={12}>
           <Products />
         </Grid>
       </Grid>

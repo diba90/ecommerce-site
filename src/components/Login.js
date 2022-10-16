@@ -6,6 +6,7 @@ import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import { login, logout } from "../features/userSlice";
+import { clearCart } from "../features/cartSlice";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
@@ -18,6 +19,7 @@ import Products from "./Products";
 import Badge from "@mui/material/Badge";
 import { styled } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { Link as RouterLink } from "react-router-dom";
 import "./Login.css";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -48,13 +50,16 @@ const Login = () => {
     return state.user;
   });
 
+  var cartData = useSelector((state) => {
+    return state.cart.cart.length;
+  });
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   var errors = {};
 
   const handleLogout = () => {
     dispatch(logout());
-    window.location.reload();
   };
 
   useEffect(() => {
@@ -84,8 +89,7 @@ const Login = () => {
             setTimeout(() => {
               setOpen(false);
               setVisible(false);
-              window.location.reload();
-            }, 3000);
+            }, 2000);
             return true;
           } else {
             setVisible(true);
@@ -133,8 +137,11 @@ const Login = () => {
         <Grid item xs={12} style={{ display: "flex" }}>
           {loginData.user && loginData.user.loggedIn ? (
             <>
-              <IconButton aria-label="cart">
-                <StyledBadge badgeContent={4} color="secondary">
+              <IconButton component={RouterLink} to="/cart" aria-label="cart">
+                <StyledBadge
+                  badgeContent={cartData ? cartData : 0}
+                  color="secondary"
+                >
                   <ShoppingCartIcon style={{ color: "#ffffff" }} />
                 </StyledBadge>
               </IconButton>
@@ -149,7 +156,9 @@ const Login = () => {
                   style={{ margin: "0 15px" }}
                   aria-label="Home"
                   component="label"
-                  onClick={handleLogout}
+                  onClick={() => {
+                    handleLogout();
+                  }}
                 >
                   <LogoutIcon style={{ fontSize: "20px", color: "#ffffff" }} />
                 </IconButton>

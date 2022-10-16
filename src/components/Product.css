@@ -1,6 +1,6 @@
 .product__content {
   float: left;
-  width: 22%;
+  width: 18.4%;
   display: block;
   align-items: center;
   padding: 20px;
@@ -19,19 +19,26 @@
   margin-bottom: 13px;
 }
 
-.product__description,
 .other__info {
   float: left;
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 10px 0 20px 0;
-  height: 85px;
+  padding: 10px 0;
+}
+
+.product__description {
+  float: left;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 0;
+  height: 100px;
 }
 
 .product__description > h3 {
-  font-size: 18px;
-  font-weight: 700;
+  font-size: 14px;
+  font-weight: 500;
 }
 
 .product__description > p {

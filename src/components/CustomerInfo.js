@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
 import "./CustomerInfo.css";
+import { useNavigate } from "react-router-dom";
 
 const CustomerInfo = () => {
   const [firstName, setFirstName] = useState("");
@@ -14,6 +15,14 @@ const CustomerInfo = () => {
   var loginData = useSelector((state) => {
     return state.user;
   });
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (loginData.user === null) {
+      navigate("/");
+    }
+  }, [loginData.user]);
 
   useEffect(() => {
     if (userList && userList.length) {

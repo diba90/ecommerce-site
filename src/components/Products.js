@@ -5,13 +5,15 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import "./Product.css";
 import Button from "@mui/material/Button";
-import { addToCart } from "../features/cartSlice";
+import { addToCart, removeFromCart } from "../features/cartSlice";
+import { listProducts } from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Products = () => {
-  const [products, setProducts] = useState(null);
+  const [products, setProducts] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [view, setView] = useState(true);
+  const [show, setShow] = useState("none");
 
   const dispatch = useDispatch();
 
@@ -19,18 +21,32 @@ const Products = () => {
     return state.user;
   });
 
+  var cartData = useSelector((state) => {
+    return state.user;
+  });
+
+  var productData = useSelector((state) => {
+    return state.product.products;
+  });
+
   useEffect(() => {
     if (loginData.user === null) {
       setView(true);
-    } else if (loginData.user.loggedIn === true) {
+    } else {
       setView(false);
     }
-  }, []);
+  }, [loginData.user]);
 
   const handleCart = (obj) => {
     document.getElementById(obj.id).innerHTML = "Added";
-    document.getElementById(obj.id).disabled = true;
     document.getElementById(obj.id).style.background = "#5c8825";
+    document.getElementById(obj.id).disabled = true;
+    document.getElementById(obj.id).style.cursor = "not-allowed";
+
+    document
+      .getElementById("btn" + obj.id)
+      .style.setProperty("display", "block", "important");
+
     dispatch(
       addToCart({
         id: obj.id,
@@ -42,12 +58,36 @@ const Products = () => {
     );
   };
 
+  const handleRemoveItem = (obj) => {
+    document.getElementById(obj.id).innerHTML = "Add to Cart";
+    document.getElementById(obj.id).style.background = "#1976d2";
+    document.getElementById(obj.id).disabled = false;
+    document.getElementById(obj.id).style.cursor = "pointer";
+
+    document
+      .getElementById("btn" + obj.id)
+      .style.setProperty("display", "none", "important");
+
+    dispatch(
+      removeFromCart({
+        id: obj.id,
+      })
+    );
+  };
+
   useEffect(() => {
-    setSpinner(true);
-    axios.get("https://fakestoreapi.com/products").then((res) => {
-      setProducts(res.data);
-      setSpinner(false);
-    });
+    if (productData.length === 0) {
+      setSpinner(true);
+      axios.get("https://fakestoreapi.com/products").then((res) => {
+        setProducts(res.data);
+        dispatch(
+          listProducts({
+            items: res.data,
+          })
+        );
+        setSpinner(false);
+      });
+    }
   }, []);
 
   return (
@@ -62,7 +102,7 @@ const Products = () => {
                 <CircularProgress />
               </Box>
             ) : (
-              products?.map((product) => (
+              productData.items?.map((product) => (
                 <div key={product?.id} className="product__content">
                   <div className="product__image">
                     <img src={product?.image} alt={product?.title} />
@@ -86,12 +126,30 @@ const Products = () => {
                           title: product?.title,
                           price: product?.price,
                           pic: product?.image,
-                          quantity: null,
+                          quantity: 1,
                         });
                       }}
                       variant="contained"
                     >
                       Add to Cart
+                    </Button>
+                    <Button
+                      style={{
+                        width: "100%",
+                        color: "#767271",
+                        textTransform: "capitalize",
+                        fontSize: "12px",
+                        display: show,
+                      }}
+                      id={"btn" + product?.id}
+                      onClick={() => {
+                        handleRemoveItem({
+                          id: product?.id,
+                        });
+                      }}
+                      variant="text"
+                    >
+                      Remove
                     </Button>
                   </div>
                 </div>
