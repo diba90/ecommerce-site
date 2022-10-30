@@ -15,6 +15,7 @@ function App() {
         <Route path="/store" element={<MainComponent />} />
         <Route path="/account" element={<Account />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/*" element={<MainComponent />} />
       </Routes>
     </Provider>
   );

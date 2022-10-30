@@ -16,6 +16,8 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { useNavigate } from "react-router-dom";
+import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
+import { visibilityHidden } from "../features/productSlice";
 
 const Cart = () => {
   var cartData = useSelector((state) => {
@@ -28,12 +30,6 @@ const Cart = () => {
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (loginData.user === null) {
-      navigate("/");
-    }
-  }, [loginData.user]);
 
   const handleAddQty = (obj) => {
     dispatch(
@@ -54,6 +50,14 @@ const Cart = () => {
   const handleRemoveItem = (obj) => {
     dispatch(
       removeFromCart({
+        id: obj.id,
+      })
+    );
+  };
+
+  const handleHide = (obj) => {
+    dispatch(
+      visibilityHidden({
         id: obj.id,
       })
     );
@@ -144,6 +148,9 @@ const Cart = () => {
                             handleRemoveItem({
                               id: item.id,
                             });
+                            handleHide({
+                              id: item.id,
+                            });
                           }}
                         >
                           Remove
@@ -155,9 +162,14 @@ const Cart = () => {
               </Table>
             </TableContainer>
           ) : (
-            <h2 className="text-3xl font-bold text-cyan-900">
-              Your cart is empty.
-            </h2>
+            <>
+              <ShoppingCartIcon
+                style={{ fontSize: "60px", marginBottom: "20px" }}
+              />
+              <h2 className="text-3xl font-bold text-cyan-900">
+                Your cart is empty.
+              </h2>
+            </>
           )}
         </Grid>
       </Grid>

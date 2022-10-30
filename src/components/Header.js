@@ -26,7 +26,7 @@ const Header = () => {
               <h1 className="text-xl font-extrabold m-0">EcomShop</h1>
             </Grid>
 
-            <Grid item xs={7}>
+            <Grid item xs={6}>
               <Stack direction="row">
                 <Button component={RouterLink} to="/store" color="inherit">
                   Products
@@ -39,7 +39,7 @@ const Header = () => {
               </Stack>
             </Grid>
 
-            <Grid item xs={3}>
+            <Grid item xs={4}>
               <Login />
             </Grid>
           </Grid>

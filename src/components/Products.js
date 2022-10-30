@@ -6,7 +6,11 @@ import Grid from "@mui/material/Grid";
 import "./Product.css";
 import Button from "@mui/material/Button";
 import { addToCart, removeFromCart } from "../features/cartSlice";
-import { listProducts } from "../features/productSlice";
+import {
+  listProducts,
+  visibilityShow,
+  visibilityHidden,
+} from "../features/productSlice";
 import { useDispatch, useSelector } from "react-redux";
 
 const Products = () => {
@@ -14,6 +18,20 @@ const Products = () => {
   const [spinner, setSpinner] = useState(false);
   const [view, setView] = useState(true);
   const [show, setShow] = useState("none");
+
+  const added = {
+    width: "100%",
+    background: "#5c8825",
+    cursor: "not-allowed",
+    color: "#dddddd",
+  };
+
+  const notadded = {
+    width: "100%",
+    background: "#1976d2",
+    cursor: "pointer",
+    color: "#ffffff",
+  };
 
   const dispatch = useDispatch();
 
@@ -38,15 +56,6 @@ const Products = () => {
   }, [loginData.user]);
 
   const handleCart = (obj) => {
-    document.getElementById(obj.id).innerHTML = "Added";
-    document.getElementById(obj.id).style.background = "#5c8825";
-    document.getElementById(obj.id).disabled = true;
-    document.getElementById(obj.id).style.cursor = "not-allowed";
-
-    document
-      .getElementById("btn" + obj.id)
-      .style.setProperty("display", "block", "important");
-
     dispatch(
       addToCart({
         id: obj.id,
@@ -58,16 +67,23 @@ const Products = () => {
     );
   };
 
+  const handleShow = (obj) => {
+    dispatch(
+      visibilityShow({
+        id: obj.id,
+      })
+    );
+  };
+
+  const handleHide = (obj) => {
+    dispatch(
+      visibilityHidden({
+        id: obj.id,
+      })
+    );
+  };
+
   const handleRemoveItem = (obj) => {
-    document.getElementById(obj.id).innerHTML = "Add to Cart";
-    document.getElementById(obj.id).style.background = "#1976d2";
-    document.getElementById(obj.id).disabled = false;
-    document.getElementById(obj.id).style.cursor = "pointer";
-
-    document
-      .getElementById("btn" + obj.id)
-      .style.setProperty("display", "none", "important");
-
     dispatch(
       removeFromCart({
         id: obj.id,
@@ -79,10 +95,14 @@ const Products = () => {
     if (productData.length === 0) {
       setSpinner(true);
       axios.get("https://fakestoreapi.com/products").then((res) => {
-        setProducts(res.data);
+        const updatedProducts = res.data.map((item) => ({
+          ...item,
+          selected: false,
+        }));
+        setProducts(updatedProducts);
         dispatch(
           listProducts({
-            items: res.data,
+            items: updatedProducts,
           })
         );
         setSpinner(false);
@@ -116,10 +136,10 @@ const Products = () => {
                   </div>
                   <div className="add__to__cart">
                     <Button
-                      style={{ width: "100%" }}
+                      style={product?.selected ? added : notadded}
                       id={product?.id}
                       className="cart__button"
-                      disabled={view}
+                      disabled={product?.selected ? true : false}
                       onClick={() => {
                         handleCart({
                           id: product?.id,
@@ -128,22 +148,29 @@ const Products = () => {
                           pic: product?.image,
                           quantity: 1,
                         });
+                        handleShow({
+                          id: product?.id,
+                        });
                       }}
                       variant="contained"
                     >
-                      Add to Cart
+                      {product?.selected ? "Added" : "Add to Cart"}
                     </Button>
+
                     <Button
                       style={{
                         width: "100%",
                         color: "#767271",
                         textTransform: "capitalize",
                         fontSize: "12px",
-                        display: show,
+                        display: product?.selected ? "block" : "none",
                       }}
                       id={"btn" + product?.id}
                       onClick={() => {
                         handleRemoveItem({
+                          id: product?.id,
+                        });
+                        handleHide({
                           id: product?.id,
                         });
                       }}

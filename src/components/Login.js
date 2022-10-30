@@ -134,17 +134,30 @@ const Login = () => {
   return (
     <div>
       <Grid container item xs={12}>
-        <Grid item xs={12} style={{ display: "flex" }}>
+        <Grid
+          item
+          xs={12}
+          style={{
+            display: "flex",
+            justifyContent: "end",
+            alignItems: "flex-start",
+          }}
+        >
+          <IconButton
+            style={{ marginRight: "30px" }}
+            component={RouterLink}
+            to="/cart"
+            aria-label="cart"
+          >
+            <StyledBadge
+              badgeContent={cartData ? cartData : 0}
+              color="secondary"
+            >
+              <ShoppingCartIcon style={{ color: "#ffffff" }} />
+            </StyledBadge>
+          </IconButton>
           {loginData.user && loginData.user.loggedIn ? (
             <>
-              <IconButton component={RouterLink} to="/cart" aria-label="cart">
-                <StyledBadge
-                  badgeContent={cartData ? cartData : 0}
-                  color="secondary"
-                >
-                  <ShoppingCartIcon style={{ color: "#ffffff" }} />
-                </StyledBadge>
-              </IconButton>
               <div className="header__greeting__message">
                 <h3 className="text-l ml-3 tracking-wide text-white-900">
                   Hello,{"  "}

@@ -28,6 +28,9 @@ const Signup = () => {
         const updatedUsers = [...addedUser, obj];
         localStorage.setItem("ListUsers", JSON.stringify(updatedUsers));
         setVisible(true);
+        setTimeout(() => {
+          setVisible(false);
+        }, 2000);
         setFirstName("");
         setLastName("");
         setEmail("");
