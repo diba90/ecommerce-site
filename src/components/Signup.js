@@ -30,6 +30,7 @@ const Signup = () => {
         setVisible(true);
         setTimeout(() => {
           setVisible(false);
+          setOpen(false);
         }, 2000);
         setFirstName("");
         setLastName("");
@@ -44,6 +45,7 @@ const Signup = () => {
         setVisible(true);
         setTimeout(() => {
           setVisible(false);
+          setOpen(false);
         }, 2000);
         setFirstName("");
         setLastName("");
