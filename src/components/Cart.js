@@ -1,5 +1,5 @@
-import React, { useEffect } from "react";
-import "./Cart.css";
+import React from "react";
+import "./css/Cart.css";
 import Button from "@mui/material/Button";
 import Header from "./Header";
 import Grid from "@mui/material/Grid";
@@ -15,7 +15,6 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { visibilityHidden } from "../features/productSlice";
 
@@ -24,12 +23,7 @@ const Cart = () => {
     return state.cart.cart;
   });
 
-  var loginData = useSelector((state) => {
-    return state.user;
-  });
-
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleAddQty = (obj) => {
     dispatch(
@@ -109,6 +103,8 @@ const Cart = () => {
                           aria-label="outlined button group"
                         >
                           <Button
+                            id={"R" + item.id}
+                            disabled={item.quantity === 1 ? true : false}
                             onClick={() => {
                               handleRemoveQty({
                                 id: item.id,
@@ -119,6 +115,8 @@ const Cart = () => {
                           </Button>
                           <Button>{item.quantity}</Button>
                           <Button
+                            id={"A" + item.id}
+                            disabled={item.quantity === 10 ? true : false}
                             onClick={() => {
                               handleAddQty({
                                 id: item.id,

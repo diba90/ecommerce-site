@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import Button from "@mui/material/Button";
 import Header from "./Header";
 import Grid from "@mui/material/Grid";
 import CustomerInfo from "./CustomerInfo";
@@ -17,11 +16,11 @@ const Account = () => {
     if (loginData.user === null) {
       navigate("/");
     }
-  }, [loginData.user]);
+  }, [loginData.user, navigate]);
 
   return (
     <React.Fragment>
-      <Header />
+      <Header id={2} />
       <Grid container item xs={12}>
         <Grid item xs={12}>
           <CustomerInfo />

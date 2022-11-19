@@ -1,14 +1,12 @@
 import React from "react";
-import Button from "@mui/material/Button";
 import Header from "./Header";
 import Grid from "@mui/material/Grid";
-import Chip from "@mui/material/Chip";
 import Products from "./Products";
 
 const MainComponent = () => {
   return (
     <React.Fragment>
-      <Header />
+      <Header id={1} />
       <Grid container item xs={12}>
         {/* <Grid item xs={2}>
           <h3

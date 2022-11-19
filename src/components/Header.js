@@ -9,10 +9,23 @@ import Login from "./Login";
 import { useSelector } from "react-redux";
 import { Link as RouterLink } from "react-router-dom";
 
-const Header = () => {
+const Header = (prop) => {
   var loginData = useSelector((state) => {
     return state.user;
   });
+
+  const button_normal = {
+    margin: "0 15px",
+    padding: "5px 25px",
+  };
+
+  const button_selected = {
+    background: "rgb(71 146 193)",
+    borderRadius: "10px",
+    margin: "0 25px",
+    height: "max-content",
+    padding: "5px 25px",
+  };
 
   return (
     <Box sx={{ flexGrow: 1 }}>
@@ -28,11 +41,21 @@ const Header = () => {
 
             <Grid item xs={6}>
               <Stack direction="row">
-                <Button component={RouterLink} to="/store" color="inherit">
+                <Button
+                  component={RouterLink}
+                  to="/store"
+                  style={prop.id === 1 ? button_selected : button_normal}
+                  color="inherit"
+                >
                   Products
                 </Button>
                 {loginData.user && loginData.user.loggedIn && (
-                  <Button component={RouterLink} to="/account" color="inherit">
+                  <Button
+                    component={RouterLink}
+                    to="/account"
+                    style={prop.id === 2 ? button_selected : button_normal}
+                    color="inherit"
+                  >
                     Account
                   </Button>
                 )}

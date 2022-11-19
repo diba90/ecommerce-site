@@ -1,26 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
 import TextField from "@mui/material/TextField";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
 import Grid from "@mui/material/Grid";
 import IconButton from "@mui/material/IconButton";
 import { login, logout } from "../features/userSlice";
-import { clearCart } from "../features/cartSlice";
+import Signup from "./Signup";
+import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
 import DialogTitle from "@mui/material/DialogTitle";
-import Signup from "./Signup";
 import LogoutIcon from "@mui/icons-material/Logout";
 import { useDispatch, useSelector } from "react-redux";
 import Alert from "@mui/material/Alert";
 import Collapse from "@mui/material/Collapse";
-import Products from "./Products";
 import Badge from "@mui/material/Badge";
+import { useNavigate } from "react-router-dom";
 import { styled } from "@mui/material/styles";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { Link as RouterLink } from "react-router-dom";
-import "./Login.css";
+import "./css/Login.css";
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
   "& .MuiBadge-badge": {
@@ -36,6 +35,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Login = () => {
   const [open, setOpen] = useState(false);
+  const [openConfirm, setOpenConfirm] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState({});
@@ -43,6 +43,14 @@ const Login = () => {
   const [flag, setFlag] = useState(false);
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [alertText, setAlertText] = useState("");
+
+  const handleClickOpen = () => {
+    setOpenConfirm(true);
+  };
+
+  const handleCloseConfirm = () => {
+    setOpenConfirm(false);
+  };
 
   const userList = JSON.parse(localStorage.getItem("ListUsers"));
 
@@ -60,6 +68,7 @@ const Login = () => {
 
   const handleLogout = () => {
     dispatch(logout());
+    setOpenConfirm(false);
   };
 
   useEffect(() => {
@@ -169,9 +178,7 @@ const Login = () => {
                   style={{ margin: "0 15px" }}
                   aria-label="Home"
                   component="label"
-                  onClick={() => {
-                    handleLogout();
-                  }}
+                  onClick={handleClickOpen}
                 >
                   <LogoutIcon style={{ fontSize: "20px", color: "#ffffff" }} />
                 </IconButton>
@@ -203,7 +210,7 @@ const Login = () => {
             {alertText}
           </Alert>
         </Collapse>
-        <DialogTitle>Sign In</DialogTitle>
+        <DialogTitle>Login to your Account</DialogTitle>
         <DialogContent style={{ width: "500px" }}>
           <TextField
             margin="dense"
@@ -230,7 +237,26 @@ const Login = () => {
         </DialogContent>
         <DialogActions>
           <Button onClick={handleClose}>Cancel</Button>
-          <Button onClick={(e) => handleSubmit(e)}>Login</Button>
+          <Button onClick={(e) => handleSubmit(e)}>Sign In</Button>
+        </DialogActions>
+      </Dialog>
+      <Dialog
+        open={openConfirm}
+        onClose={handleClose}
+        aria-labelledby="alert-dialog-title"
+        aria-describedby="alert-dialog-description"
+      >
+        <DialogTitle id="alert-dialog-title">{"Confirmation !!!"}</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="alert-dialog-description">
+            Do you want to logout ?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseConfirm}>No</Button>
+          <Button onClick={handleLogout} autoFocus>
+            Yes
+          </Button>
         </DialogActions>
       </Dialog>
     </div>

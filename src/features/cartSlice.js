@@ -15,11 +15,8 @@ export const cartSlice = createSlice({
       );
       state.cart.splice(nodeIndex, 1);
     },
-    clearCart: (state) => {
-      state.cart = null;
-    },
     addQty: (state, action) => {
-      state.cart.map((cartItem) => {
+      state.cart.forEach((cartItem) => {
         if (cartItem.id === action.payload.id) {
           if (cartItem.quantity <= 9) {
             cartItem.quantity += 1;
@@ -28,7 +25,7 @@ export const cartSlice = createSlice({
       });
     },
     removeQty: (state, action) => {
-      state.cart.map((cartItem) => {
+      state.cart.forEach((cartItem) => {
         if (cartItem.id === action.payload.id) {
           if (cartItem.quantity > 1) {
             cartItem.quantity -= 1;
@@ -39,7 +36,7 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, removeFromCart, clearCart, addQty, removeQty } =
+export const { addToCart, removeFromCart, addQty, removeQty } =
   cartSlice.actions;
 
 export const selectCart = (state) => state.user.user;

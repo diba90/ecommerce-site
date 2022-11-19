@@ -3,7 +3,7 @@ import axios from "axios";
 import CircularProgress from "@mui/material/CircularProgress";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import "./Product.css";
+import "./css/Product.css";
 import Button from "@mui/material/Button";
 import { addToCart, removeFromCart } from "../features/cartSlice";
 import {

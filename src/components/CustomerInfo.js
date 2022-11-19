@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Grid from "@mui/material/Grid";
-import "./CustomerInfo.css";
+import "./css/CustomerInfo.css";
 import { useNavigate } from "react-router-dom";
 
 const CustomerInfo = () => {
@@ -22,14 +22,13 @@ const CustomerInfo = () => {
     if (loginData.user === null) {
       navigate("/");
     }
-  }, [loginData.user]);
+  }, [loginData.user, navigate]);
 
   useEffect(() => {
     if (userList && userList.length) {
       const getUsers = JSON.parse(localStorage.getItem("ListUsers"));
 
       getUsers.map((el) => {
-        console.log("Y");
         if (el.email === loginData.user.email) {
           setEmail(el.email);
           setFirstName(el.first_name);
@@ -38,7 +37,7 @@ const CustomerInfo = () => {
         }
       });
     }
-  }, []);
+  }, [loginData.user.email, userList]);
 
   return (
     <React.Fragment>
