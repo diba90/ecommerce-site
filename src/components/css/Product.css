@@ -55,3 +55,24 @@
   font-weight: 700;
   color: #b80371;
 }
+
+@media only screen and (max-width: 768px) {
+  .product__content {
+    width: 95%;
+    margin: 20px 10px;
+    height: auto;
+  }
+
+  .product__description {
+    height: auto;
+  }
+
+  .product__image {
+    height: auto;
+  }
+  .product__image > img {
+    width: auto;
+    height: 150px;
+    margin: 0 auto 13px auto;
+  }
+}

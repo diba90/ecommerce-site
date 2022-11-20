@@ -19,6 +19,14 @@ import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import { visibilityHidden } from "../features/productSlice";
 
 const Cart = () => {
+  const cart_style = {
+    margin: "100px 20%",
+    "@media (max-width: 768px)": {
+      margin: "10px 15px",
+      maxWidth: "93%",
+    },
+  };
+
   var cartData = useSelector((state) => {
     return state.cart.cart;
   });
@@ -61,7 +69,7 @@ const Cart = () => {
     <React.Fragment>
       <Header />
       <Grid container item xs={12}>
-        <Grid item xs={12} style={{ margin: "100px 20%" }}>
+        <Grid item xs={12} sx={cart_style}>
           {cartData.length !== 0 ? (
             <TableContainer component={Paper}>
               <Table sx={{ minWidth: 650 }} aria-label="simple table">

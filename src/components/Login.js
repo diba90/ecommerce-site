@@ -44,6 +44,13 @@ const Login = () => {
   const [alertSeverity, setAlertSeverity] = useState("success");
   const [alertText, setAlertText] = useState("");
 
+  const dialog_style = {
+    width: "500px",
+    "@media (max-width: 768px)": {
+      width: "100%",
+    },
+  };
+
   const handleClickOpen = () => {
     setOpenConfirm(true);
   };
@@ -211,7 +218,7 @@ const Login = () => {
           </Alert>
         </Collapse>
         <DialogTitle>Login to your Account</DialogTitle>
-        <DialogContent style={{ width: "500px" }}>
+        <DialogContent sx={dialog_style}>
           <TextField
             margin="dense"
             id="name"

@@ -10,6 +10,14 @@ const CustomerInfo = () => {
   const [address, setAddress] = useState("");
   const [email, setEmail] = useState("");
 
+  const grid_style = {
+    padding: "40px 35%",
+    "@media (max-width: 768px)": {
+      padding: "10px",
+      textAlign: "center",
+    },
+  };
+
   const userList = JSON.parse(localStorage.getItem("ListUsers"));
 
   var loginData = useSelector((state) => {
@@ -41,7 +49,7 @@ const CustomerInfo = () => {
 
   return (
     <React.Fragment>
-      <Grid container item xs={12} style={{ padding: "40px 35%" }}>
+      <Grid container item xs={12} sx={grid_style}>
         <Grid container item xs={12} style={{ padding: "30px 0" }}>
           <Grid item xs={6}>
             <p className="customer_info_text">{"Full Name :"}</p>

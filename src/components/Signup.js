@@ -21,6 +21,13 @@ const Signup = () => {
   const [error, setError] = useState({});
   const [flag, setFlag] = useState(false);
 
+  const dialog_style = {
+    width: "600px",
+    "@media (max-width: 768px)": {
+      width: "100%",
+    },
+  };
+
   useEffect(() => {
     if (flag === true) {
       if (localStorage.getItem("ListUsers") != null) {
@@ -150,7 +157,7 @@ const Signup = () => {
           </Alert>
         </Collapse>
         <DialogTitle>Create an Account</DialogTitle>
-        <DialogContent style={{ width: "600px" }}>
+        <DialogContent sx={dialog_style}>
           <Grid container item xs={12} spacing={4}>
             <Grid item xs={6}>
               <TextField
